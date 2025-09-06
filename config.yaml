@@ -1,0 +1,20 @@
+project:
+  name: "Claude Code UI"
+  version: "1.0.0"
+  description: "Modern Vercel-powered development platform"
+
+features:
+  - ai_integration: true
+  - real_time_chat: true
+  - file_management: true
+  - code_generation: true
+
+integrations:
+  github: true
+  slack: true
+  vercel: true
+
+components:
+  ui_library: "shadcn/ui"
+  icons: "lucide-react"
+  animations: "framer-motion"
