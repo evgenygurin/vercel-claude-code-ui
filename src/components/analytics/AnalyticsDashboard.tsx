@@ -383,7 +383,7 @@ export function AnalyticsDashboard() {
         <CardContent>
           <div className="space-y-2 font-mono text-sm">
             <div className="bg-muted p-2 rounded">
-              jq '.metrics[] | select(.change > 0)' analytics.json
+              jq '.metrics[] | select(.change &gt; 0)' analytics.json
             </div>
             <div className="bg-muted p-2 rounded">
               yq '.tools | to_entries | sort_by(.value.usage)' config.yaml
