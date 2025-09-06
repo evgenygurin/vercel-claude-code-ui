@@ -1,4 +1,6 @@
 {
   "/files/page": "app/files/page.js",
-  "/api/health/route": "app/api/health/route.js"
+  "/integrations/page": "app/integrations/page.js",
+  "/page": "app/page.js",
+  "/editor/page": "app/editor/page.js"
 }
