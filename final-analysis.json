@@ -1,9 +1,9 @@
 {
   "analysis_timestamp": "2025-09-06T17:22:49Z",
   "project_metrics": {
-    "typescript_files":       33,
-    "react_components":       21,
-    "imports_count":      129,
+    "typescript_files": 33,
+    "react_components": 21,
+    "imports_count": 129,
     "dependencies_count": 45,
     "build_status": "successful"
   },

@@ -1,0 +1,317 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 94.1%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/50;
+  }
+
+  /* Code editor styles */
+  .code-editor {
+    @apply font-mono text-sm leading-relaxed;
+  }
+
+  .code-editor .token.comment {
+    @apply text-muted-foreground;
+  }
+
+  .code-editor .token.keyword {
+    @apply text-blue-600 dark:text-blue-400;
+  }
+
+  .code-editor .token.string {
+    @apply text-green-600 dark:text-green-400;
+  }
+
+  .code-editor .token.number {
+    @apply text-purple-600 dark:text-purple-400;
+  }
+
+  .code-editor .token.function {
+    @apply text-yellow-600 dark:text-yellow-400;
+  }
+
+  /* File tree styles */
+  .file-tree {
+    @apply space-y-1;
+  }
+
+  .file-tree-item {
+    @apply flex items-center gap-2 px-2 py-1 rounded-md hover:bg-accent cursor-pointer transition-colors;
+  }
+
+  .file-tree-item.active {
+    @apply bg-accent text-accent-foreground;
+  }
+
+  /* Terminal styles */
+  .terminal {
+    @apply bg-black text-green-400 font-mono text-sm p-4 rounded-lg;
+  }
+
+  .terminal .prompt {
+    @apply text-blue-400;
+  }
+
+  .terminal .command {
+    @apply text-white;
+  }
+
+  .terminal .output {
+    @apply text-gray-300;
+  }
+
+  /* Loading animations */
+  .loading-dots {
+    @apply inline-flex space-x-1;
+  }
+
+  .loading-dots > div {
+    @apply w-2 h-2 bg-current rounded-full animate-pulse;
+  }
+
+  .loading-dots > div:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .loading-dots > div:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+
+  /* Gradient backgrounds */
+  .gradient-bg {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary)) 0%,
+      hsl(var(--secondary)) 100%
+    );
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-background/80 backdrop-blur-sm border border-border/50;
+  }
+
+  /* Hover effects */
+  .hover-lift {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  .hover-glow {
+    @apply transition-shadow duration-200 hover:shadow-lg hover:shadow-primary/25;
+  }
+}
+
+@layer utilities {
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Animation utilities */
+  .animate-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .animate-out {
+    animation: fadeOut 0.5s ease-out;
+  }
+
+  /* Focus utilities */
+  .focus-visible {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+
+  /* Selection utilities */
+  .select-none {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Print utilities */
+  .print-hidden {
+    @apply print:hidden;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Code syntax highlighting */
+.hljs {
+  @apply bg-transparent;
+}
+
+/* Monaco Editor overrides */
+.monaco-editor {
+  @apply rounded-lg;
+}
+
+.monaco-editor .margin {
+  @apply bg-muted/50;
+}
+
+/* React Flow styles */
+.react-flow__node {
+  @apply bg-card border border-border rounded-lg shadow-sm;
+}
+
+.react-flow__edge {
+  @apply stroke-border;
+}
+
+.react-flow__edge.selected {
+  @apply stroke-primary;
+}
+
+/* React Split Pane styles */
+.Resizer {
+  @apply bg-border;
+}
+
+.Resizer:hover {
+  @apply bg-primary/50;
+}
+
+.Resizer.vertical {
+  @apply w-1 cursor-col-resize;
+}
+
+.Resizer.horizontal {
+  @apply h-1 cursor-row-resize;
+}
+
+/* React DnD Kit styles */
+.dnd-kit-drag-handle {
+  @apply cursor-grab active:cursor-grabbing;
+}
+
+.dnd-kit-drag-overlay {
+  @apply opacity-50;
+}
+
+/* Custom components */
+.claude-code-ui {
+  @apply min-h-screen bg-background;
+}
+
+.claude-code-ui-header {
+  @apply border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60;
+}
+
+.claude-code-ui-sidebar {
+  @apply border-r border-border bg-muted/50;
+}
+
+.claude-code-ui-main {
+  @apply flex-1 overflow-hidden;
+}
+
+.claude-code-ui-panel {
+  @apply border border-border rounded-lg bg-card shadow-sm;
+}
+
+.claude-code-ui-tab {
+  @apply border-b-2 border-transparent px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground;
+}
+
+.claude-code-ui-tab.active {
+  @apply border-primary text-primary;
+}

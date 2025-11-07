@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🎯 Claude Code UI - Final Tool Orchestration Demo"
+echo "🎯 Gemini Code UI - Final Tool Orchestration Demo"
 echo "=================================================="
 echo
 
@@ -48,7 +48,7 @@ else
     echo "config.yaml not found, creating sample..."
     cat > config.yaml << 'EOF'
 project:
-  name: "Claude Code UI"
+  name: "Gemini Code UI"
   features:
     - ai_integration: true
     - real_time_chat: true
@@ -106,7 +106,7 @@ echo "• jq - JSON data processing"
 echo "• yq - YAML configuration management"
 echo "• xargs - Parallel processing"
 echo
-echo "Project: Claude Code UI"
+echo "Project: Gemini Code UI"
 echo "Status: Production Ready"
 echo "Tools Integrated: 6 advanced development tools"
 echo "Complexity Level: Enterprise-grade orchestration"

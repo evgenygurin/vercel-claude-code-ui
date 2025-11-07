@@ -2,9 +2,9 @@
   "project": "vercel-claude-code-ui",
   "timestamp": "2025-09-06T17:12:39Z",
   "metrics": {
-    "typescript_files":       14,
-    "react_components":       10,
-    "imports":       41,
+    "typescript_files": 14,
+    "react_components": 10,
+    "imports": 41,
     "dependencies": 42,
     "features": 4
   },

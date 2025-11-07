@@ -383,16 +383,16 @@ export function AnalyticsDashboard() {
         <CardContent>
           <div className="space-y-2 font-mono text-sm">
             <div className="bg-muted p-2 rounded">
-              jq '.metrics[] | select(.change &gt; 0)' analytics.json
+              jq &apos;.metrics[] | select(.change &gt; 0)&apos; analytics.json
             </div>
             <div className="bg-muted p-2 rounded">
-              yq '.tools | to_entries | sort_by(.value.usage)' config.yaml
+              yq &apos;.tools | to_entries | sort_by(.value.usage)&apos; config.yaml
             </div>
             <div className="bg-muted p-2 rounded">
-              rg "performance|analytics" --glob "*.ts" --count
+              rg &quot;performance|analytics&quot; --glob &quot;*.ts&quot; --count
             </div>
             <div className="bg-muted p-2 rounded">
-              rg "performance|analytics" --glob "*.tsx" --count
+              rg &quot;performance|analytics&quot; --glob &quot;*.tsx&quot; --count
             </div>
             <div className="bg-muted p-2 rounded">
               fd . src --type f | xargs wc -l | tail -1

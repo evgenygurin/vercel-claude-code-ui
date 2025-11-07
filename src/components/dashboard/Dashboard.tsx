@@ -1,140 +1,178 @@
 'use client'
 
+import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { SystemMonitor } from '@/components/system/SystemMonitor'
-import {
-  Code,
-  MessageSquare,
-  FileText,
-  Users,
-  TrendingUp,
-  Zap,
-  Plus,
-  ArrowRight,
-  Activity,
-  Database
+import { 
+  Code, 
+  FileText, 
+  MessageSquare, 
+  BarChart3, 
+  Zap, 
+  Users, 
+  Settings,
+  Play,
+  Download,
+  Upload,
+  Star,
+  GitBranch,
+  Clock,
+  Activity
 } from 'lucide-react'
 
+const features = [
+  {
+    title: 'Code Editor',
+    description: 'Advanced code editor with syntax highlighting and IntelliSense',
+    icon: Code,
+    href: '/editor',
+    color: 'text-blue-600',
+    bgColor: 'bg-blue-50 dark:bg-blue-950',
+  },
+  {
+    title: 'File Manager',
+    description: 'Organize and manage your project files with drag & drop',
+    icon: FileText,
+    href: '/files',
+    color: 'text-green-600',
+    bgColor: 'bg-green-50 dark:bg-green-950',
+  },
+  {
+    title: 'Claude Sessions',
+    description: 'Manage Claude AI coding sessions with v0 integration',
+    icon: MessageSquare,
+    href: '/claude',
+    color: 'text-purple-600',
+    bgColor: 'bg-purple-50 dark:bg-purple-950',
+  },
+  {
+    title: 'AI Chat',
+    description: 'Chat with Claude AI for code assistance and debugging',
+    icon: MessageSquare,
+    href: '/chat',
+    color: 'text-indigo-600',
+    bgColor: 'bg-indigo-50 dark:bg-indigo-950',
+  },
+  {
+    title: 'Analytics',
+    description: 'Track your coding progress and project metrics',
+    icon: BarChart3,
+    href: '/analytics',
+    color: 'text-orange-600',
+    bgColor: 'bg-orange-50 dark:bg-orange-950',
+  },
+  {
+    title: 'Integrations',
+    description: 'Connect with external services and APIs',
+    icon: Zap,
+    href: '/integrations',
+    color: 'text-yellow-600',
+    bgColor: 'bg-yellow-50 dark:bg-yellow-950',
+  },
+  {
+    title: 'Team Collaboration',
+    description: 'Work together with your team in real-time',
+    icon: Users,
+    href: '/team',
+    color: 'text-pink-600',
+    bgColor: 'bg-pink-50 dark:bg-pink-950',
+  },
+]
+
+const recentProjects = [
+  {
+    name: 'Claude Code UI',
+    type: 'Next.js',
+    lastModified: '2 hours ago',
+    status: 'active',
+  },
+  {
+    name: 'AI Assistant',
+    type: 'React',
+    lastModified: '1 day ago',
+    status: 'completed',
+  },
+  {
+    name: 'E-commerce Platform',
+    type: 'Vue.js',
+    lastModified: '3 days ago',
+    status: 'in-progress',
+  },
+]
+
+const stats = [
+  {
+    title: 'Total Projects',
+    value: '12',
+    change: '+2 this week',
+    icon: GitBranch,
+    color: 'text-blue-600',
+  },
+  {
+    title: 'Lines of Code',
+    value: '45,231',
+    change: '+1,234 today',
+    icon: Code,
+    color: 'text-green-600',
+  },
+  {
+    title: 'Active Sessions',
+    value: '3',
+    change: '2 hours avg',
+    icon: Activity,
+    color: 'text-purple-600',
+  },
+  {
+    title: 'AI Interactions',
+    value: '127',
+    change: '+23 today',
+    icon: MessageSquare,
+    color: 'text-orange-600',
+  },
+]
+
 export function Dashboard() {
-  const stats = [
-    {
-      title: 'Total Projects',
-      value: '12',
-      change: '+2',
-      icon: FileText,
-      color: 'text-blue-600'
-    },
-    {
-      title: 'AI Conversations',
-      value: '847',
-      change: '+12%',
-      icon: MessageSquare,
-      color: 'text-green-600'
-    },
-    {
-      title: 'Code Generated',
-      value: '24.5K',
-      change: '+8%',
-      icon: Code,
-      color: 'text-purple-600'
-    },
-    {
-      title: 'Team Members',
-      value: '8',
-      change: '+1',
-      icon: Users,
-      color: 'text-orange-600'
-    },
-    {
-      title: 'API Calls',
-      value: '2,847',
-      change: '+12%',
-      icon: Zap,
-      color: 'text-yellow-600'
-    },
-    {
-      title: 'Deployments',
-      value: '24',
-      change: '+3',
-      icon: TrendingUp,
-      color: 'text-indigo-600'
-    },
-    {
-      title: 'Storage Used',
-      value: '1.2GB',
-      change: '15%',
-      icon: Database,
-      color: 'text-red-600'
-    },
-    {
-      title: 'Active Sessions',
-      value: '16',
-      change: '+4',
-      icon: Activity,
-      color: 'text-teal-600'
-    }
-  ]
-
-  const recentProjects = [
-    { name: 'E-commerce Platform', status: 'In Progress', progress: 75 },
-    { name: 'AI Chat Interface', status: 'Review', progress: 90 },
-    { name: 'File Manager v2', status: 'Completed', progress: 100 },
-    { name: 'Analytics Dashboard', status: 'Planning', progress: 20 }
-  ]
-
-  const recentActivity = [
-    { action: 'Generated code for user authentication', time: '2 minutes ago' },
-    { action: 'Updated project documentation', time: '15 minutes ago' },
-    { action: 'Created new component library', time: '1 hour ago' },
-    { action: 'Integrated with GitHub API', time: '2 hours ago' }
-  ]
+  const [selectedFeature, setSelectedFeature] = useState<string | null>(null)
 
   return (
     <div className="space-y-8">
-      {/* Welcome Section */}
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Welcome back!</h1>
-          <p className="text-muted-foreground mt-2">
+          <h1 className="text-3xl font-bold tracking-tight">Welcome back!</h1>
+          <p className="text-muted-foreground">
             Here's what's happening with your projects today.
           </p>
         </div>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          New Project
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm">
+            <Upload className="h-4 w-4 mr-2" />
+            Import
+          </Button>
+          <Button size="sm">
+            <Play className="h-4 w-4 mr-2" />
+            New Project
+          </Button>
+        </div>
       </div>
 
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="system">System Monitor</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="ai-tools">AI Tools</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="overview" className="space-y-8">
-
-      {/* Stats Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {/* Stats */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => {
           const Icon = stat.icon
           return (
             <Card key={stat.title}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
+                <CardTitle className="text-sm font-medium">
                   {stat.title}
                 </CardTitle>
                 <Icon className={`h-4 w-4 ${stat.color}`} />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+                <div className="text-2xl font-bold">{stat.value}</div>
                 <p className="text-xs text-muted-foreground">
-                  <span className="text-green-600">{stat.change}</span> from last month
+                  {stat.change}
                 </p>
               </CardContent>
             </Card>
@@ -142,178 +180,117 @@ export function Dashboard() {
         })}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {/* Recent Projects */}
+      {/* Features Grid */}
+      <div>
+        <h2 className="text-2xl font-bold tracking-tight mb-6">Features</h2>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {features.map((feature) => {
+            const Icon = feature.icon
+            return (
+              <Card 
+                key={feature.title}
+                className="cursor-pointer transition-all duration-200 hover:shadow-md hover:scale-105"
+                onClick={() => setSelectedFeature(feature.title)}
+              >
+                <CardHeader>
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2 rounded-lg ${feature.bgColor}`}>
+                      <Icon className={`h-5 w-5 ${feature.color}`} />
+                    </div>
+                    <CardTitle className="text-lg">{feature.title}</CardTitle>
+                  </div>
+                  <CardDescription>{feature.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      // Navigate to feature
+                    }}
+                  >
+                    Open
+                  </Button>
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Recent Projects */}
+      <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Recent Projects</CardTitle>
             <CardDescription>
-              Your latest development activities
+              Your recently worked on projects
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {recentProjects.map((project, index) => (
-              <div key={index} className="flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-sm font-medium">{project.name}</h4>
-                    <Badge variant={project.status === 'Completed' ? 'default' : 'secondary'}>
+          <CardContent>
+            <div className="space-y-4">
+              {recentProjects.map((project) => (
+                <div key={project.name} className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center">
+                      <Code className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="font-medium">{project.name}</p>
+                      <p className="text-sm text-muted-foreground">{project.type}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge 
+                      variant={
+                        project.status === 'active' ? 'default' :
+                        project.status === 'completed' ? 'secondary' : 'outline'
+                      }
+                    >
                       {project.status}
                     </Badge>
+                    <span className="text-sm text-muted-foreground flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      {project.lastModified}
+                    </span>
                   </div>
-                  <Progress value={project.progress} className="h-2" />
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {project.progress}% complete
-                  </p>
                 </div>
-              </div>
-            ))}
-            <Button variant="outline" className="w-full">
-              View All Projects
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+              ))}
+            </div>
           </CardContent>
         </Card>
 
-        {/* Recent Activity */}
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
+            <CardTitle>Quick Actions</CardTitle>
             <CardDescription>
-              Latest actions and updates
+              Common tasks and shortcuts
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {recentActivity.map((activity, index) => (
-              <div key={index} className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                <div className="flex-1">
-                  <p className="text-sm text-foreground">{activity.action}</p>
-                  <p className="text-xs text-muted-foreground">{activity.time}</p>
-                </div>
-              </div>
-            ))}
-            <Button variant="outline" className="w-full">
-              View All Activity
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+          <CardContent>
+            <div className="grid gap-3">
+              <Button variant="outline" className="justify-start">
+                <FileText className="h-4 w-4 mr-2" />
+                Create New File
+              </Button>
+              <Button variant="outline" className="justify-start">
+                <Download className="h-4 w-4 mr-2" />
+                Export Project
+              </Button>
+              <Button variant="outline" className="justify-start">
+                <Settings className="h-4 w-4 mr-2" />
+                Project Settings
+              </Button>
+              <Button variant="outline" className="justify-start">
+                <Star className="h-4 w-4 mr-2" />
+                Add to Favorites
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
-
-      {/* Quick Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>
-            Common tasks to get you started
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-3">
-            <Button className="h-20 flex-col space-y-2">
-              <Code className="h-6 w-6" />
-              <span>Generate Code</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
-              <MessageSquare className="h-6 w-6" />
-              <span>Start Chat</span>
-            </Button>
-            <Button variant="outline" className="h-20 flex-col space-y-2">
-              <Zap className="h-6 w-6" />
-              <span>View Integrations</span>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-        </TabsContent>
-
-        <TabsContent value="system">
-          <SystemMonitor />
-        </TabsContent>
-
-        <TabsContent value="analytics">
-          <Card>
-            <CardHeader>
-              <CardTitle>Analytics Dashboard</CardTitle>
-              <CardDescription>
-                Advanced analytics powered by development tools
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-8">
-                <Activity className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Analytics Coming Soon</h3>
-                <p className="text-muted-foreground">
-                  Advanced analytics with fd, ripgrep, ast-grep, jq, and yq integration
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="ai-tools">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>AI Tool Integration</CardTitle>
-                <CardDescription>
-                  Advanced development tools for AI-powered workflows
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                    <FileText className="h-5 w-5 text-blue-500" />
-                    <span className="text-sm font-medium">fd</span>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                    <Code className="h-5 w-5 text-green-500" />
-                    <span className="text-sm font-medium">ripgrep</span>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                    <Zap className="h-5 w-5 text-purple-500" />
-                    <span className="text-sm font-medium">ast-grep</span>
-                  </div>
-                  <div className="flex items-center space-x-2 p-3 border rounded-lg">
-                    <Database className="h-5 w-5 text-orange-500" />
-                    <span className="text-sm font-medium">jq</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Quick AI Actions</CardTitle>
-                <CardDescription>
-                  Common AI-powered development tasks
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <Button className="w-full justify-start">
-                    <Code className="mr-2 h-4 w-4" />
-                    Generate Component
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <MessageSquare className="mr-2 h-4 w-4" />
-                    Start AI Chat
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <FileText className="mr-2 h-4 w-4" />
-                    Analyze Codebase
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start">
-                    <TrendingUp className="mr-2 h-4 w-4" />
-                    Generate Reports
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-      </Tabs>
     </div>
   )
 }

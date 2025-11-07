@@ -12,7 +12,11 @@ import {
   Users,
   BarChart3,
   Zap,
-  X
+  X,
+  Bot,
+  Terminal,
+  GitBranch,
+  FolderOpen,
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -22,10 +26,13 @@ interface SidebarProps {
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
+  { name: 'Claude Sessions', href: '/claude', icon: Bot },
+  { name: 'Terminal', href: '/terminal', icon: Terminal },
+  { name: 'Projects', href: '/projects', icon: FolderOpen },
   { name: 'Files', href: '/files', icon: FileText },
+  { name: 'Git', href: '/git', icon: GitBranch },
   { name: 'Code Editor', href: '/editor', icon: Code },
   { name: 'AI Chat', href: '/chat', icon: MessageSquare },
-  { name: 'Integrations', href: '/integrations', icon: Zap },
   { name: 'Analytics', href: '/analytics', icon: BarChart3 },
   { name: 'Team', href: '/team', icon: Users },
   { name: 'Settings', href: '/settings', icon: Settings },

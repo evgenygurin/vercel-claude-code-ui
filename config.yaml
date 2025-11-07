@@ -1,5 +1,5 @@
 project:
-  name: "Claude Code UI"
+  name: "Gemini Code UI"
   version: "1.0.0"
   description: "Modern Vercel-powered development platform"
 

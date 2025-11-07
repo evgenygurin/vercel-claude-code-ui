@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "=== Claude Code UI Project Analysis ==="
+echo "=== Gemini Code UI Project Analysis ==="
 echo
 
 echo "📁 File Structure Analysis (using fd):"
