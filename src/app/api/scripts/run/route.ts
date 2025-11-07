@@ -3,8 +3,30 @@ import { spawn } from 'child_process'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import { tmpdir } from 'os'
+import { rateLimit, requireApiKey } from '@/lib/rate-limit'
+
+// Rate limiter: 10 requests per minute for script execution (stricter due to security)
+const limiter = rateLimit({
+  interval: 60 * 1000,
+  uniqueTokenPerInterval: 10,
+})
 
 export async function POST(request: NextRequest) {
+  // Require API key for script execution if configured
+  if (process.env.REQUIRE_SCRIPT_AUTH === 'true') {
+    return requireApiKey(async (req) => {
+      return limiter(req, async (r) => {
+        return await handlePost(r)
+      })
+    })(request)
+  }
+
+  return limiter(request, async (req) => {
+    return await handlePost(req)
+  })
+}
+
+async function handlePost(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json()
     const { script, language = 'bash', args = [] } = body

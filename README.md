@@ -11,10 +11,11 @@ A modern, production-ready web interface for **Claude Code** and **Cursor CLI**,
 - **Smart Sessions**: Persistent conversation history
 
 ### 💻 Terminal & Execution
-- **Interactive Terminal**: Full xterm.js terminal with syntax highlighting
-- **Command Execution**: Safe command execution with whitelist
-- **Script Runner**: Execute bash, Python, Node.js scripts
-- **Output Streaming**: Real-time command output
+- **Real-time Terminal**: Full xterm.js terminal with WebSocket support
+- **Live Shell Sessions**: Interactive bash/zsh sessions via Socket.io
+- **Script Runner**: Execute bash, Python, Node.js, TypeScript scripts
+- **Output Streaming**: Real-time command output with ANSI colors
+- **Auto-Reconnect**: Automatic reconnection on disconnect
 
 ### 📂 Project Management
 - **Auto-Discovery**: Finds projects from `~/.claude/projects/` and local directories
@@ -31,6 +32,13 @@ A modern, production-ready web interface for **Claude Code** and **Cursor CLI**,
 - **Performance Metrics**: Track usage and performance
 - **Usage Statistics**: Monitor API calls and tokens
 - **System Health**: Real-time system monitoring
+
+### 🔒 Security Features
+- **Rate Limiting**: Intelligent rate limiting on all API endpoints
+- **API Key Authentication**: Optional API key protection for sensitive operations
+- **CORS Protection**: Configurable CORS with origin whitelisting
+- **Input Sanitization**: Command whitelist and input validation
+- **Security Headers**: XSS, frame options, CSP protection
 
 ## 🚀 Quick Start
 
@@ -64,31 +72,41 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 Create a `.env.local` file with:
 
 ```env
-# Anthropic API (required for Claude features)
+# Anthropic Claude API (Required)
 ANTHROPIC_API_KEY=your_anthropic_key_here
 
-# Optional: Vercel Analytics
-NEXT_PUBLIC_VERCEL_ANALYTICS_ID=your_analytics_id
+# Security & Authentication (Optional but recommended)
+API_KEY=""                                    # API key for securing endpoints
+REQUIRE_AUTH="false"                          # Require API key for WebSocket
+REQUIRE_SCRIPT_AUTH="false"                   # Require API key for script execution
+ALLOWED_ORIGINS="http://localhost:3000"       # CORS origins (production)
 
-# Optional: Database (if using)
-DATABASE_URL=your_database_url
+# Server Configuration
+PORT=3000
+NODE_ENV=development
 ```
+
+See `.env.example` for full configuration options.
 
 ## 📖 Usage
 
 ### Terminal
 
-Navigate to `/terminal` to access the interactive terminal:
+Navigate to `/terminal` to access the real-time interactive terminal:
+
+The terminal uses WebSocket for live shell sessions. You can run any command in your default shell (bash/zsh):
 
 ```bash
-# Allowed commands
-ls, pwd, git, npm, node, echo, cat, mkdir, rm, vercel
-
-# Examples
+# Full shell access (no whitelist restrictions)
+ls -la
 git status
 npm run build
+python script.py
 vercel deploy --prod
+cd ~/projects && pwd
 ```
+
+Connection status is displayed in the top-left corner.
 
 ### Claude Chat
 
@@ -198,6 +216,31 @@ Configured for optimal Vercel deployment:
 - Environment: Production-ready
 - Analytics: Integrated
 
+## 🧪 Testing
+
+### Unit & Integration Tests
+
+```bash
+npm test                 # Run Jest tests
+npm run test:watch       # Watch mode
+npm run test:coverage    # Coverage report
+```
+
+### E2E Tests with Playwright
+
+```bash
+npm run test:e2e         # Run all E2E tests
+npm run test:e2e:ui      # Interactive UI mode
+npm run test:e2e:headed  # Headed browser mode
+```
+
+E2E tests cover:
+- Homepage navigation
+- Terminal functionality
+- API endpoint behavior
+- Rate limiting
+- Responsive design
+
 ## 📚 API Reference
 
 ### Claude Chat API
@@ -278,11 +321,50 @@ Response:
 
 ## 🔒 Security
 
-- **Command Whitelist**: Only allowed commands can be executed
-- **Input Sanitization**: All user inputs are sanitized
-- **API Rate Limiting**: Built-in rate limiting (Vercel)
-- **CORS Protection**: Proper CORS configuration
-- **Environment Variables**: Secure key management
+### Rate Limiting
+
+All API endpoints have intelligent rate limiting:
+
+- **Claude Chat**: 20 requests/minute per IP
+- **Terminal Execute**: 30 requests/minute per IP
+- **Script Execution**: 10 requests/minute per IP (stricter due to security)
+- **WebSocket**: 100 connections/minute per IP
+
+Rate limits include proper HTTP headers (`X-RateLimit-*`) and return `429 Too Many Requests` when exceeded.
+
+### API Key Authentication
+
+Optional API key authentication for enhanced security:
+
+```bash
+# Set in .env.local
+API_KEY=your-secret-key-here
+REQUIRE_AUTH=true                    # Require for WebSocket connections
+REQUIRE_SCRIPT_AUTH=true             # Require for script execution
+```
+
+Clients must provide the key via `X-API-Key` header:
+
+```bash
+curl -H "X-API-Key: your-secret-key" http://localhost:3000/api/scripts/run
+```
+
+### Security Headers
+
+Automatic security headers on all routes:
+
+- `X-Frame-Options: DENY`
+- `X-Content-Type-Options: nosniff`
+- `X-XSS-Protection: 1; mode=block`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy: camera=(), microphone=(), geolocation=()`
+
+### Input Validation
+
+- Command whitelist for `/api/terminal/execute` endpoint
+- Script language validation
+- Environment variable protection
+- Path traversal prevention
 
 ## 🚢 Deployment
 

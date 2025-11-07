@@ -1,7 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { rateLimit, RateLimitPresets } from '@/lib/rate-limit'
+
+// Rate limiter: 20 requests per minute for AI chat
+const limiter = rateLimit({
+  interval: 60 * 1000,
+  uniqueTokenPerInterval: 20,
+})
 
 // This endpoint handles Claude AI chat interactions
 export async function POST(request: NextRequest) {
+  return limiter(request, async (req) => {
+    return await handlePost(req)
+  })
+}
+
+async function handlePost(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json()
     const { message, sessionId, model = 'claude-sonnet-4' } = body
@@ -73,6 +86,12 @@ export async function POST(request: NextRequest) {
 
 // Stream endpoint for real-time responses
 export async function GET(request: NextRequest) {
+  return limiter(request, async (req) => {
+    return await handleGet(req)
+  })
+}
+
+async function handleGet(request: NextRequest): Promise<NextResponse | Response> {
   const message = request.nextUrl.searchParams.get('message')
 
   if (!message) {

@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST='{"app/terminal/page.tsx -> @/components/terminal/Terminal":{"id":9604,"files":["static/css/0a6ee5b67e39af85.css","static/chunks/vendors-746cdfbb96aae219.js","static/chunks/604.3cbaa43237fb1284.js"]}}';
+self.__REACT_LOADABLE_MANIFEST='{"app/terminal/page.tsx -> @/components/terminal/Terminal":{"id":9604,"files":["static/css/0a6ee5b67e39af85.css","static/chunks/vendors-789e252aa77ca4d0.js","static/chunks/604.a83501a34e446ff9.js"]}}';

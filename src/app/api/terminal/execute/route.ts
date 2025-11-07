@@ -1,7 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { spawn } from 'child_process'
+import { rateLimit } from '@/lib/rate-limit'
+
+// Rate limiter: 30 requests per minute for terminal execution
+const limiter = rateLimit({
+  interval: 60 * 1000,
+  uniqueTokenPerInterval: 30,
+})
 
 export async function POST(request: NextRequest) {
+  return limiter(request, async (req) => {
+    return await handlePost(req)
+  })
+}
+
+async function handlePost(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json()
     const { command } = body
