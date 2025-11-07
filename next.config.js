@@ -116,6 +116,9 @@ const nextConfig = {
   // Output configuration
   output: 'standalone',
 
+  // Silence workspace root warning
+  outputFileTracingRoot: require('path').join(__dirname),
+
 
   // Compiler options
   compiler: {
